@@ -2,6 +2,7 @@
 // Assignment : final project make a game
 // Course     : CS099
 // Spring 2021
+
 var start_top = 250
 var start_left = 140
 
@@ -28,14 +29,17 @@ var button_MouseWasPressed = false
 
 function preload()
 {
-    mouse_cursor = loadImage('Images/mouse cursor.png')
-    Magnifying_Glass = loadImage('Images/Magnifying Glass cursor.png')
-    frame1 = loadImage('Images/piano paint.jpg')
-    shelving1 = loadImage('Images/shelving 1.png')
-    key = loadImage('Images/KEY.png')
-    bed = loadImage('Images/bed.png')
-    lug = loadImage('Images/lug.png')
-    detail_shelving1 = loadImage('Images/room1_Shelving.jpg')
+    mouse_cursor = loadImage('Images/Room1/mouse cursor.png')
+    Magnifying_Glass = loadImage('Images/Room1/Magnifying Glass cursor.png')
+    frame1 = loadImage('Images/Room1/piano paint.jpg')
+    shelving1 = loadImage('Images/Room1/shelving 1.png')
+    key = loadImage('Images/Room1/KEY.png')
+    bed = loadImage('Images/Room1/bed.png')
+    lug = loadImage('Images/Room1/lug.png')
+    detail_shelving1 = loadImage('Images/Room1/detail shelving.png')
+    b_door = loadImage('Images/Room1/basement door.png')
+    detail_lug = loadImage('Images/Room1/lug detail.jpg')
+    detail_frame = loadImage('Images/Room1/frame detail.png')
 }
 
 let Current_Screen = main_menu; 
@@ -44,7 +48,7 @@ function setup()
 {
 
     createCanvas( 800, 600 );
-
+    button1 = new BUTTON(width/2, height/2);
 
 }
 
@@ -54,6 +58,7 @@ function setup()
 function draw()
 {
     background( '#f3edd3' );
+
 
     
 
@@ -131,6 +136,17 @@ function draw()
     const within_ly = mouseY > l_top && mouseY < l_bottom;
 
     lug_MouseIsOver = within_lx && within_ly
+
+    //key effect setting
+    const k_left = 254;
+    const k_right = 254 + 92;
+    const k_top = 312;
+    const k_bottom = 312 + 56;
+
+    const within_kx = mouseX > k_left && mouseX < k_right;
+    const within_ky = mouseY < k_top && mouseY < k_bottom;
+
+    key_MouseIsOver = within_kx && within_ky
 
     
     //screen change
@@ -301,6 +317,8 @@ function draw()
                     image(bed, 410, 195, 300, 300)
 
                     
+
+                    
                     fill('black')
                     rect(width/2, height, 800, 200)
                     
@@ -320,7 +338,7 @@ function draw()
                     {
                         if(within_s1x && within_s1y)
                         {
-                            Current_Screen = room1_Shelving
+                            Current_Screen = room1_key
                         }
 
                     }
@@ -334,6 +352,15 @@ function draw()
                         text('A picture with a piano on it.', 50, 560)
                     }   
 
+                    if(mouseIsPressed)
+                    {
+                        if(within_f1x && within_f1y)
+                        {
+                            Current_Screen = room1_frame
+                        }
+
+                    }
+
                    
                     if(bed_MouseIsOver)
                     {
@@ -342,6 +369,7 @@ function draw()
                         textSize(25)
                         text('The bed. There is nothing special.', 50, 560)
                     }  
+
                     
                     if(lug_MouseIsOver)
                     {
@@ -349,6 +377,24 @@ function draw()
                         fill('white')
                         textSize(25)
                         text('The lug. I think there is something underneath.', 50, 560)
+                    }
+
+                    if(mouseIsPressed)
+                    {
+                        if(within_lx && within_ly)
+                        {
+                            Current_Screen = room1_lug
+                        }
+
+                    }
+
+                    if(mouseIsPressed)
+                    {
+                        if(within_bx && within_by)
+                        {
+                            Current_Screen = room1_lug
+                        }
+
                     }
 
 
@@ -485,27 +531,82 @@ function draw()
                     }
 
     break;
-    case room1_Shelving :
+    case room1_key :
         {
             background('#BBBBBB')
-            image(detail_shelving1, 0, 0, 645, 647)
+            image(detail_shelving1, 100, 0, 700, 530)
 
-            strokeWeight(8.5)
-            stroke('black')
-            line(196, 127, 800, 127)
+            fill('black')
+            rect(width/2, height, 800, 200) 
 
-            noStroke();
-            fill('#8E7F7F')
-            rect(642, 0, 350, 245)
-        }
-    
+            image(mouse_cursor, mouseX , mouseY , 50, 50)
+
+            //if(key_MouseIsOver)
+            //{
+            //    fill('white')
+            //    textSize(25)
+            //    text('You pick the key. But it is a toy.', 50, 560)              
+            //    
+            //    image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+            //    
+            //}
+
+            
+
+            //let button
+            //
+
+            //createButton ('The key');
+            //button.position(width/2, height/2);
+            //button.mousePressed(key_detail);
 
     
     }
+    
+    break;
+    case room1_lug :
+        {
+            background('#E2D5D5')
+
+            image(detail_lug, 0 , 0 , 800, 370)
+            image(b_door, 146, 170 , 666, 375)
+
+            fill('black')
+            rect(width/2, height, 800, 200) 
+
+            fill('white')
+            textSize(25)
+            text('Under the lug, there is a door leading to the basement.', 50, 560)     
+
+            image(mouse_cursor, mouseX , mouseY , 50, 50)
+        }
+
+        break;
+        case room1_frame :
+            {
+                background('#8E7F7F') 
+
+                image(detail_frame, 0, 50 , 800, 487)
+
+                fill('black')
+                rect(width/2, height, 800, 200)
+
+                image(mouse_cursor, mouseX , mouseY , 50, 50)
+
+            }
+}
+
 }
 
 function mousePressed()
 {
     console.log(mouseX, mouseY);
-
 }
+
+function key_detail()
+{
+    fill('white')
+    textSize(25)
+    text(' ▶You pick the key. But it is a toy.', 50, 560)     
+}
+
