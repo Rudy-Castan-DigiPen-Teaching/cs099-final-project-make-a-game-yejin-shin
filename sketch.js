@@ -3,6 +3,13 @@
 // Course     : CS099
 // Spring 2021
 
+//button class
+let room1_key_section_button
+let room1_something_section_button
+let back_to_the_room1_button
+let back_to_the_room1_button2
+let back_to_the_room1_button3
+
 var start_top = 250
 var start_left = 140
 
@@ -40,16 +47,19 @@ function preload()
     b_door = loadImage('Images/Room1/basement door.png')
     detail_lug = loadImage('Images/Room1/lug detail.jpg')
     detail_frame = loadImage('Images/Room1/frame detail.png')
+    square_thing = loadImage('Images/Room1/square (brown one).jpg')
 }
 
 let Current_Screen = main_menu; 
 
 function setup()
 {
-
     createCanvas( 800, 600 );
-    button1 = new BUTTON(width/2, height/2);
-
+    room1_key_section_button = new button_screen(120, 120, room1_middle, 20,'The key', '▶Pick the key')
+    room1_something_section_button = new button_screen(120, 177, room1_middle, 17,'Something', '▶To investigate')
+    back_to_the_room1_button = new button_screen(120, 234, room1_middle, 25, 'Back', '▶Go back to the room')
+    back_to_the_room1_button2 = new button_screen(606, 270, room1_middle, 25, 'Back', '▶Go back to the room')
+    back_to_the_room1_button3 = new button_screen(120, 426, room1_middle, 25, 'Back', '▶Go back to the room')
 }
 
 
@@ -59,8 +69,6 @@ function draw()
 {
     background( '#f3edd3' );
 
-
-    
 
     //button effect setting
 
@@ -214,7 +222,6 @@ function draw()
 
 
     fill(255, 255, 255, 95);
-    rectMode(CENTER);
     rect(width/2, height/2, 800, 600);
 
     strokeWeight(5)
@@ -279,6 +286,7 @@ function draw()
             case room1_middle:
                 {
                     background('#BBBBBB')
+
                     noStroke();
                     fill('#8E7F7F')
                     quad(0, 0, width, 0, 660, 141, 136, 141)
@@ -388,24 +396,6 @@ function draw()
 
                     }
 
-                    if(mouseIsPressed)
-                    {
-                        if(within_bx && within_by)
-                        {
-                            Current_Screen = room1_lug
-                        }
-
-                    }
-
-
-
-
-
-                    
-                    
-
-                    
-                    
 
 
             }
@@ -434,7 +424,7 @@ function draw()
                     }
 
                     fill(255, 255, 255, 95);
-                    rectMode(CENTER);
+            
                     rect(width/2, height/2, 800, 600);
 
                     fill(255, 255, 255);
@@ -539,29 +529,25 @@ function draw()
             fill('black')
             rect(width/2, height, 800, 200) 
 
-            image(mouse_cursor, mouseX , mouseY , 50, 50)
 
-            //if(key_MouseIsOver)
-            //{
-            //    fill('white')
-            //    textSize(25)
-            //    text('You pick the key. But it is a toy.', 50, 560)              
-            //    
-            //    image(Magnifying_Glass, mouseX , mouseY , 50, 50)
-            //    
-            //}
+            
+            
+            room1_key_section_button.draw()
+            room1_key_section_button.update()
+
+            room1_something_section_button.draw()
+            room1_something_section_button.update()
+
+            back_to_the_room1_button.draw()
+            back_to_the_room1_button.update()
 
             
 
-            //let button
-            //
+            image(mouse_cursor, mouseX , mouseY , 50, 50)
 
-            //createButton ('The key');
-            //button.position(width/2, height/2);
-            //button.mousePressed(key_detail);
 
     
-    }
+        }
     
     break;
     case room1_lug :
@@ -578,6 +564,9 @@ function draw()
             textSize(25)
             text('Under the lug, there is a door leading to the basement.', 50, 560)     
 
+            back_to_the_room1_button3.draw()
+            back_to_the_room1_button3.update()
+
             image(mouse_cursor, mouseX , mouseY , 50, 50)
         }
 
@@ -591,7 +580,39 @@ function draw()
                 fill('black')
                 rect(width/2, height, 800, 200)
 
+                back_to_the_room1_button2.draw()
+                back_to_the_room1_button2.update()
+
                 image(mouse_cursor, mouseX , mouseY , 50, 50)
+
+            }
+
+        break;
+        case room2_middle :
+            {
+                    background('#BBBBBB')
+
+                    noStroke();
+                    fill('#8E7F7F')
+                    quad(0, 0, width, 0, 660, 141, 136, 141)
+                    fill('#BBBBBB')
+                    rect(398, 380, 522, 300)
+                    fill('#E2D5D5')
+                    quad(137, 398, 659, 400, width, 600, 0, 600)
+                    strokeWeight(3)
+                    stroke('black')
+                    line(136, 141, 137, 398)
+                    line(660, 141, 659, 400)
+
+                    line(136, 141, 660, 141)
+                    line(137,398, 659, 400)
+
+                    line(136, 141, 0, 0)
+                    line(660, 141, width, 0)
+
+                    line(659, 400, width, height)
+                    line(137, 398, 0, height)
+
 
             }
 }
@@ -603,10 +624,6 @@ function mousePressed()
     console.log(mouseX, mouseY);
 }
 
-function key_detail()
-{
-    fill('white')
-    textSize(25)
-    text(' ▶You pick the key. But it is a toy.', 50, 560)     
-}
+
+
 
