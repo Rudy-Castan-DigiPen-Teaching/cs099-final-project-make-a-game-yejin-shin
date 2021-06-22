@@ -33,6 +33,7 @@ var main_height = 53
 var start_button_MouseIsOver = false
 var how2play_button_MouseIsOver = false
 var frame1_MouseIsOver = false
+var elevator_MouseIsOver = false
 
 var button_MouseWasPressed = false
 
@@ -169,6 +170,17 @@ function draw()
     const within_ky = mouseY < k_top && mouseY < k_bottom;
 
     key_MouseIsOver = within_kx && within_ky
+
+    //elevator effect setting
+    const e_left = 282;
+    const e_right = 282 + 208;
+    const e_top = 187;
+    const e_bottom = 284 + 115 + 115;
+
+    const within_ex = mouseX >= e_left && mouseX < e_right;
+    const within_ey = mouseY >= e_top && mouseY < e_bottom;
+
+    elevator_MouseIsOver = within_ex && within_ey
 
     
     //screen change
@@ -370,14 +382,7 @@ function draw()
 
                     }
 
-                    if(frame1_MouseIsOver)
-                    {
-                        image(Magnifying_Glass, mouseX , mouseY , 50, 50)
-
-                        fill('white')
-                        textSize(30)
-                        text('▶A picture with a piano on it.', 50, 560)
-                    }   
+                    
 
                     if(mouseIsPressed)
                     {
@@ -388,6 +393,14 @@ function draw()
 
                     }
 
+
+                if(frame1_MouseIsOver)
+                {
+                        image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                        fill('white')
+                        textSize(25)
+                        text('▶It is a frame with a picture of the piano. ', 50, 560)
+                }
                    
                     if(bed_MouseIsOver)
                     {
@@ -601,6 +614,8 @@ function draw()
 
                 fill('black')
                 rect(width/2, height, 800, 200)
+                
+                
 
                 room1_investigate_the_frame_button.draw()
                 room1_investigate_the_frame_button.update()
@@ -658,8 +673,9 @@ function draw()
 
                     image(detail_frame, 0, 50 , 800, 487)
 
-                    let x1 = map(mouseX, 0, width, 25, 75);
-                    ellipse(x1, 25, 25, 25);
+                    let y1
+                    y1 =+ 2
+                    ellipse(392, y1, 25, 25);
     
                     fill('black')
                     rect(width/2, height, 800, 200)
@@ -667,8 +683,13 @@ function draw()
                     fill('white')
                     text('▶Something is drop out.', 66, 560)
 
+                    
+                    back_to_the_room1_button2.draw()
+                    back_to_the_room1_button2.update()
+
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
                 }
+
 
         break;
         case room2_middle :
@@ -693,7 +714,17 @@ function draw()
                     rect(width/2, height, 800, 200)
 
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
-            }
+                    
+                    if(elevator_MouseIsOver)
+                    {
+                        fill('white')
+                        textSize(30)
+                        text('▶The elevator. The electricity seems to have been cut off.', 50, 560)
+
+                        image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                    }
+                       
+                }
 }
 
 }
