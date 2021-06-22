@@ -5,7 +5,7 @@
 
 class button_text
 {
-    constructor(x, y, Text_size, BUTTON_text, detail_button)
+    constructor(x, y, Text_size, BUTTON_text, detail_button, insert_image)
     {
         this.x = x;
         this.y = y;
@@ -61,7 +61,8 @@ class button_text
                 fill('white')
                 text(this.detail, 81, 560)
 
-                insert_image
+                loadImage(this.image)
+                image(this.image_name,this.image_x, this.image_y)
             }
         }
     }

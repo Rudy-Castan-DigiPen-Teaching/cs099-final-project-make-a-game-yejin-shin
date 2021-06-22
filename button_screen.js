@@ -5,7 +5,7 @@
 
 class button_screen
 {
-    constructor(x, y, screen, Text_size, BUTTON_text, detail_button)
+    constructor(x, y, screen, Text_size, BUTTON_text, detail_button, insert_color, i_x, i_y, i_w, i_h)
     {
         this.x = x;
         this.y = y;
@@ -15,6 +15,11 @@ class button_screen
         this.size = Text_size
         this.text = BUTTON_text
         this.detail = detail_button
+        this.insert_x = i_x
+        this.insert_y = i_y
+        this.insert_w = i_w
+        this.insert_h = i_h
+        this.insert_color = insert_color
         this.offset = 0;
     }
 
@@ -38,6 +43,9 @@ class button_screen
             this.height = 37;
 
             this.offset = 2;
+
+            fill(this.insert_color)
+            rect(this.insert_x, this.insert_y, this.insert_w, this.insert_h)
 
             fill('white')
             text(this.detail, 81, 560)

@@ -9,6 +9,7 @@ let room1_something_section_button
 let back_to_the_room1_button
 let back_to_the_room1_button2
 let back_to_the_room1_button3
+let open_the_b_door
 
 var start_top = 250
 var start_left = 140
@@ -55,11 +56,12 @@ let Current_Screen = main_menu;
 function setup()
 {
     createCanvas( 800, 600 );
-    room1_key_section_button = new button_screen(120, 120, room1_middle, 20,'The key', '▶Pick the key')
-    room1_something_section_button = new button_screen(120, 177, room1_middle, 17,'Something', '▶To investigate')
-    back_to_the_room1_button = new button_screen(120, 234, room1_middle, 25, 'Back', '▶Go back to the room')
-    back_to_the_room1_button2 = new button_screen(606, 270, room1_middle, 25, 'Back', '▶Go back to the room')
-    back_to_the_room1_button3 = new button_screen(120, 426, room1_middle, 25, 'Back', '▶Go back to the room')
+    room1_key_section_button = new button_screen(120, 120, room1_middle, 20,'The key', '▶Pick the key',  'black', width/2, height, 800, 200)
+    room1_something_section_button = new button_screen(120, 177, room1_middle, 17,'Something', '▶To investigate',  'black', width/2, height, 800, 200)
+    back_to_the_room1_button = new button_screen(120, 234, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
+    back_to_the_room1_button2 = new button_screen(606, 270, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
+    back_to_the_room1_button3 = new button_screen(120, 426, room1_middle, 25, 'Back', '▶Go back to the room', 'black', width/2, height, 800, 200)
+    open_the_b_door = new button_screen(120, 375, room2_middle, 20, 'Basement', '▶Escape from this room', 'black', width/2, height, 800, 200)
 }
 
 
@@ -337,9 +339,8 @@ function draw()
                     {
                         image(Magnifying_Glass, mouseX , mouseY , 50, 50)
                         fill('white')
-                        textSize(30)
-                        text('The cabinet with the key in the first compartment. ', 50, 540)
-                        text('There is something off in the back.', 50, 580)
+                        textSize(25)
+                        text('▶There was a key on the shelf and something fell behind it.', 50, 560)
                     }
 
                     if(mouseIsPressed)
@@ -357,7 +358,7 @@ function draw()
 
                         fill('white')
                         textSize(30)
-                        text('A picture with a piano on it.', 50, 560)
+                        text('▶A picture with a piano on it.', 50, 560)
                     }   
 
                     if(mouseIsPressed)
@@ -375,7 +376,7 @@ function draw()
                         image(Magnifying_Glass, mouseX , mouseY , 50, 50)
                         fill('white')
                         textSize(25)
-                        text('The bed. There is nothing special.', 50, 560)
+                        text('▶The bed. There is nothing special.', 50, 560)
                     }  
 
                     
@@ -384,7 +385,7 @@ function draw()
                         image(Magnifying_Glass, mouseX , mouseY , 50, 50)
                         fill('white')
                         textSize(25)
-                        text('The lug. I think there is something underneath.', 50, 560)
+                        text('▶The lug. I think there is something underneath.', 50, 560)
                     }
 
                     if(mouseIsPressed)
@@ -567,6 +568,9 @@ function draw()
             back_to_the_room1_button3.draw()
             back_to_the_room1_button3.update()
 
+            open_the_b_door.draw()
+            open_the_b_door.update()
+
             image(mouse_cursor, mouseX , mouseY , 50, 50)
         }
 
@@ -613,7 +617,8 @@ function draw()
                     line(659, 400, width, height)
                     line(137, 398, 0, height)
 
-
+                    fill('black')
+                    rect(width/2, height, 800, 200)
             }
 }
 
