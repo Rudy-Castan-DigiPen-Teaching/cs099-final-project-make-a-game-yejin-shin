@@ -6,6 +6,7 @@
 //button class
 let room1_key_section_button
 let room1_something_section_button
+let room1_investigate_the_frame_button
 let back_to_the_room1_button
 let back_to_the_room1_button2
 let back_to_the_room1_button3
@@ -37,8 +38,11 @@ var button_MouseWasPressed = false
 
 function preload()
 {
+    //cursor
     mouse_cursor = loadImage('Images/Room1/mouse cursor.png')
     Magnifying_Glass = loadImage('Images/Room1/Magnifying Glass cursor.png')
+    
+    //room 1
     frame1 = loadImage('Images/Room1/piano paint.jpg')
     shelving1 = loadImage('Images/Room1/shelving 1.png')
     key = loadImage('Images/Room1/KEY.png')
@@ -49,6 +53,12 @@ function preload()
     detail_lug = loadImage('Images/Room1/lug detail.jpg')
     detail_frame = loadImage('Images/Room1/frame detail.png')
     square_thing = loadImage('Images/Room1/square (brown one).jpg')
+    remove_something = loadImage('Images/Room1/remove the something.png')
+
+    //room2(basement)
+    basement_background = loadImage('Images/Basement/Basement background.JPG')
+    door_thing = loadImage('Images/Basement/door thing.png')
+    elevator = loadImage('Images/Basement/elevator.png')
 }
 
 let Current_Screen = main_menu; 
@@ -56,12 +66,14 @@ let Current_Screen = main_menu;
 function setup()
 {
     createCanvas( 800, 600 );
-    room1_key_section_button = new button_screen(120, 120, room1_middle, 20,'The key', '▶Pick the key',  'black', width/2, height, 800, 200)
-    room1_something_section_button = new button_screen(120, 177, room1_middle, 17,'Something', '▶To investigate',  'black', width/2, height, 800, 200)
+    //room1 button
+    room1_key_section_button = new button_screen(120, 120, room1_pick_the_key, 20,'The key', '▶Pick the key',  'black', width/2, height, 800, 200)
+    room1_something_section_button = new button_screen(120, 177, room1_pick_the_something, 17,'Something', '▶To investigate',  'black', width/2, height, 800, 200)
     back_to_the_room1_button = new button_screen(120, 234, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
     back_to_the_room1_button2 = new button_screen(606, 270, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
     back_to_the_room1_button3 = new button_screen(120, 426, room1_middle, 25, 'Back', '▶Go back to the room', 'black', width/2, height, 800, 200)
     open_the_b_door = new button_screen(120, 375, room2_middle, 20, 'Basement', '▶Escape from this room', 'black', width/2, height, 800, 200)
+    room1_investigate_the_frame_button = new button_screen(606, 215, room1_investigate_the_frame, 25, 'frame', '▶Investigate the frame', 'black', width/2, height, 800, 200)
 }
 
 
@@ -311,13 +323,15 @@ function draw()
                     line(137, 398, 0, height)
 
                     
-
                     image(lug, 200, 400, 400, 100)
 
                     noStroke();
                     fill('#1f691c');
                     circle(142, 411, 20);
                     circle(132, 417, 10);
+
+                    
+
                     image(shelving1, 142 , 150, 200, 290);
 
                     image(frame1, 368, 180, 80, 80)
@@ -325,6 +339,10 @@ function draw()
                     image(key, 155, 218, 60, 40)
                     
                     image(bed, 410, 195, 300, 300)
+
+
+
+
 
                     
 
@@ -584,6 +602,9 @@ function draw()
                 fill('black')
                 rect(width/2, height, 800, 200)
 
+                room1_investigate_the_frame_button.draw()
+                room1_investigate_the_frame_button.update()
+
                 back_to_the_room1_button2.draw()
                 back_to_the_room1_button2.update()
 
@@ -591,34 +612,87 @@ function draw()
 
             }
 
+            break;
+            case room1_pick_the_key :
+                {
+                    background('#BBBBBB')
+                    image(detail_shelving1, 100, 0, 700, 530)
+                    image(square_thing, 303, -22, 165, 165)
+
+
+                    fill('black')
+                    rect(width/2, height, 800, 200) 
+
+                    fill('white')
+                    text('▶That was a toy key.',66, 560)
+                    
+                    back_to_the_room1_button.draw()
+                    back_to_the_room1_button.update()
+                
+                    image(mouse_cursor, mouseX , mouseY , 50, 50)
+                }
+            break;
+            case room1_pick_the_something :
+            {
+                background('#BBBBBB')
+                image(detail_shelving1, 100, 0, 700, 530)
+
+                fill('black')
+                rect(width/2, height, 800, 200)
+                
+                image(remove_something, 231, 438, 56, 61)
+
+                fill('white')
+                text('▶That was dust.',66, 560)
+
+                back_to_the_room1_button.draw()
+                back_to_the_room1_button.update()
+
+                image(mouse_cursor, mouseX , mouseY , 50, 50)
+            }
+
+            break;
+            case room1_investigate_the_frame :
+                {
+                    background('#8E7F7F') 
+
+                    image(detail_frame, 0, 50 , 800, 487)
+
+                    let x1 = map(mouseX, 0, width, 25, 75);
+                    ellipse(x1, 25, 25, 25);
+    
+                    fill('black')
+                    rect(width/2, height, 800, 200)
+
+                    fill('white')
+                    text('▶Something is drop out.', 66, 560)
+
+                    image(mouse_cursor, mouseX , mouseY , 50, 50)
+                }
+
         break;
         case room2_middle :
             {
-                    background('#BBBBBB')
+                    image(basement_background,0, 0, 800, 600)
 
-                    noStroke();
-                    fill('#8E7F7F')
-                    quad(0, 0, width, 0, 660, 141, 136, 141)
-                    fill('#BBBBBB')
-                    rect(398, 380, 522, 300)
-                    fill('#E2D5D5')
-                    quad(137, 398, 659, 400, width, 600, 0, 600)
-                    strokeWeight(3)
+                    strokeWeight(8)
                     stroke('black')
-                    line(136, 141, 137, 398)
-                    line(660, 141, 659, 400)
+                    line(35, 39, 35, 502)
+                    line(92, 98, 92, 460)
 
-                    line(136, 141, 660, 141)
-                    line(137,398, 659, 400)
+                    strokeWeight(0)
+                    fill('#c46d35')
+                    quad(39, 120, 88, 161, 88, 200, 39, 165)
+                    quad(39, 220, 88, 261, 88, 300, 39, 265)
+                    quad(39, 320, 88, 361, 88, 400, 39, 365)
 
-                    line(136, 141, 0, 0)
-                    line(660, 141, width, 0)
+                    image(elevator, 280, 142, 250, 257)
 
-                    line(659, 400, width, height)
-                    line(137, 398, 0, height)
-
+                    strokeWeight(0)
                     fill('black')
                     rect(width/2, height, 800, 200)
+
+                    image(mouse_cursor, mouseX , mouseY , 50, 50)
             }
 }
 
