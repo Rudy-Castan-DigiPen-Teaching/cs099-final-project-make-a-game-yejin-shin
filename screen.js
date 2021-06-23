@@ -12,15 +12,17 @@ const room1_frame = 5;
 const room1_lug = 6;
 const room1_something = 7;
 const room1_pick_the_key = 8;
-const room1_pick_the_something = 9;
+const room1_pick_the_something_shelving = 9;
 const room1_investigate_the_frame = 10;
+const room1_pick_the_something_frame = 11;
+
 
 //room2(basement)
-const room2_middle= 11;
-const room2_left = 12;
-const room2_back = 13;
-const room3_middle = 14;
-const room3_right = 15;
-const room3_left = 16;
-const room3_back =17;
-const room3 =18;
+const room2_middle= 12;
+const room2_elevator = 13;
+const room2_ele_not_working = 14;
+const room2_investigate_ele1 = 15;
+const room2_generator = 16;
+const room3_left = 17;
+const room3_back =18;
+const room3 =19;

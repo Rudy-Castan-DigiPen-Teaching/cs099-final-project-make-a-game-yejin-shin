@@ -3,6 +3,8 @@
 // Course     : CS099
 // Spring 2021
 
+let Y = 0;
+
 //button class
 let room1_key_section_button
 let room1_something_section_button
@@ -58,8 +60,11 @@ function preload()
 
     //room2(basement)
     basement_background = loadImage('Images/Basement/Basement background.JPG')
-    door_thing = loadImage('Images/Basement/door thing.png')
     elevator = loadImage('Images/Basement/elevator.png')
+    generator = loadImage('Images/Basement/Generator.png')
+    detail_elevator = loadImage('Images/Basement/elevator detail background.jpg')
+    g_bg = loadImage('Images/Basement/generator background.jpg')
+    detail_generator = loadImage('Images/Basement/generator detail.jpg')
 }
 
 let Current_Screen = main_menu; 
@@ -67,14 +72,28 @@ let Current_Screen = main_menu;
 function setup()
 {
     createCanvas( 800, 600 );
+
+    X = width/2
+    Y = height/2
+
+
     //room1 button
     room1_key_section_button = new button_screen(120, 120, room1_pick_the_key, 20,'The key', '▶Pick the key',  'black', width/2, height, 800, 200)
-    room1_something_section_button = new button_screen(120, 177, room1_pick_the_something, 17,'Something', '▶To investigate',  'black', width/2, height, 800, 200)
+    room1_something_section_button = new button_screen(120, 177, room1_pick_the_something_shelving, 17,'Something', '▶To investigate',  'black', width/2, height, 800, 200)
     back_to_the_room1_button = new button_screen(120, 234, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
     back_to_the_room1_button2 = new button_screen(606, 270, room1_middle, 25, 'Back', '▶Go back to the room',  'black', width/2, height, 800, 200)
     back_to_the_room1_button3 = new button_screen(120, 426, room1_middle, 25, 'Back', '▶Go back to the room', 'black', width/2, height, 800, 200)
     open_the_b_door = new button_screen(120, 375, room2_middle, 20, 'Basement', '▶Escape from this room', 'black', width/2, height, 800, 200)
     room1_investigate_the_frame_button = new button_screen(606, 215, room1_investigate_the_frame, 25, 'frame', '▶Investigate the frame', 'black', width/2, height, 800, 200)
+    pick_the_something_frame = new button_screen(606, 316, room1_pick_the_something_frame, 25, 'Pick it', '▶Pick the something', 'black', width/2, height, 800, 200)
+
+    //room2(basement) button
+
+    push_the_button = new button_screen(99, 228, room2_ele_not_working, 25, 'Button', '▶Push the elevator button', 'black', width/2, height, 800, 200)
+    investigate_door = new button_screen(99, 182, room2_ele_not_working, 25, 'Door', '▶Investigate the elevator door.', 'black', width/2, height, 800, 200)
+    investigate_screen = new button_screen(99, 271, room2_ele_not_working, 16, 'Floor screen', '▶Investigate the Floor screen', 'black', width/2, height, 800, 200)
+    back_to_room2_button = new button_screen(99, 315, room2_middle, 25, 'Back', '▶Go back to the room.', 'black', width/2, height, 800, 200)
+    back_to_the_ele = new button_screen(717.5, 222, room2_elevator, 25, 'Back', '▶Go back to the elevator.', 'black', width/2, height, 800, 200)
 }
 
 
@@ -181,6 +200,20 @@ function draw()
     const within_ey = mouseY >= e_top && mouseY < e_bottom;
 
     elevator_MouseIsOver = within_ex && within_ey
+
+
+    //generator effect setting
+    const g_left = 668;
+    const g_right = 668 + 130;
+    const g_top = 120;
+    const g_bottom = 120 + 222;
+
+    const within_gx = mouseX >= g_left && mouseX < g_right;
+    const within_gy = mouseY >= g_top && mouseY < g_bottom;
+
+    generator_MouseIsOver = within_gx && within_gy
+
+    //image(generator, 668, 120, 130, 222)
 
     
     //screen change
@@ -647,7 +680,7 @@ function draw()
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
                 }
             break;
-            case room1_pick_the_something :
+            case room1_pick_the_something_shelving :
             {
                 background('#BBBBBB')
                 image(detail_shelving1, 100, 0, 700, 530)
@@ -673,15 +706,19 @@ function draw()
 
                     image(detail_frame, 0, 50 , 800, 487)
 
-                    let y1
-                    y1 =+ 2
-                    ellipse(392, y1, 25, 25);
-    
+                    Y += 15
+
+                    fill('yellow')
+                    circle(390,Y,15)
+
                     fill('black')
                     rect(width/2, height, 800, 200)
 
                     fill('white')
                     text('▶Something is drop out.', 66, 560)
+
+                    pick_the_something_frame.draw()
+                    pick_the_something_frame.update()
 
                     
                     back_to_the_room1_button2.draw()
@@ -689,6 +726,25 @@ function draw()
 
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
                 }
+
+                break;
+                case room1_pick_the_something_frame:
+                    {
+                        background('#8E7F7F') 
+
+                        image(detail_frame, 0, 50 , 800, 487)
+
+                        fill('black')
+                        rect(width/2, height, 800, 200)
+
+                        fill('white')
+                        text('▶You pick the driver.', 66, 560)
+                        
+                        back_to_the_room1_button2.draw()
+                        back_to_the_room1_button2.update()
+    
+                        image(mouse_cursor, mouseX , mouseY , 50, 50) 
+                    }
 
 
         break;
@@ -709,6 +765,10 @@ function draw()
 
                     image(elevator, 280, 142, 250, 257)
 
+                    image(generator, 668, 120, 130, 222)
+
+                    
+
                     strokeWeight(0)
                     fill('black')
                     rect(width/2, height, 800, 200)
@@ -718,13 +778,93 @@ function draw()
                     if(elevator_MouseIsOver)
                     {
                         fill('white')
-                        textSize(30)
+                        textSize(25)
                         text('▶The elevator. The electricity seems to have been cut off.', 50, 560)
 
                         image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                        
+                        if(mouseIsPressed)
+                        {
+                            Current_Screen = room2_elevator;
+                        }
+                    
                     }
+
+
+
+                    if(generator_MouseIsOver)
+                    {
+                        fill('white')
+                        textSize(25)
+                        text('▶The generator.', 50, 560)
+
+                        image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                        
+                        if(mouseIsPressed)
+                        {
+                            Current_Screen = room2_generator;
+                        }
+                    
+                    
+                    }
+                    
                        
                 }
+                break;
+                case room2_elevator :
+                    {
+                        image(detail_elevator, 0, 0, 800, 600);
+
+                        strokeWeight(0);
+                        fill('black');
+                        rect(width/2, height, 800, 200);
+
+                        push_the_button.draw();
+                        push_the_button.update();
+
+                        investigate_door.draw();
+                        investigate_door.update();
+
+                        back_to_room2_button.draw();
+                        back_to_room2_button.update();
+
+                        investigate_screen.draw();
+                        investigate_screen.update();
+
+                        image(mouse_cursor, mouseX , mouseY , 50, 50)
+                    }
+
+                break;
+                case room2_ele_not_working :
+                    {
+                        image(detail_elevator, 0, 0, 800, 600);
+
+                        strokeWeight(0);
+                        fill('black');
+                        rect(width/2, height, 800, 200);
+
+                        fill('white')
+                        text('▶It is not working.', 50, 560);
+
+                        back_to_the_ele.draw();
+                        back_to_the_ele.update();
+
+                        image(mouse_cursor, mouseX , mouseY , 50, 50)
+                    }
+                    
+                    break;
+                    case room2_generator :
+                        {
+                            image(g_bg, 0, 0, 800, 600)
+                            
+                            image(detail_generator, 133, 109, 560, 360)
+                            
+                            strokeWeight(0);
+                            fill('black');
+                            rect(width/2, height, 800, 200);
+
+                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                        }
 }
 
 }
