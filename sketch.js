@@ -4,6 +4,9 @@
 // Spring 2021
 
 let Y = 0;
+let s_y = 0;
+let s_yl = 0;
+let s_yr = 0;
 
 //button class
 let room1_key_section_button
@@ -36,6 +39,8 @@ var start_button_MouseIsOver = false
 var how2play_button_MouseIsOver = false
 var frame1_MouseIsOver = false
 var elevator_MouseIsOver = false
+var screw_1_MouseIsOver = false
+var screw_2_MouseIsOver = false
 
 var button_MouseWasPressed = false
 
@@ -65,6 +70,10 @@ function preload()
     detail_elevator = loadImage('Images/Basement/elevator detail background.jpg')
     g_bg = loadImage('Images/Basement/generator background.jpg')
     detail_generator = loadImage('Images/Basement/generator detail.jpg')
+    sd = loadImage('Images/Basement/screwdriver.png')
+    empty = loadImage('Images/Basement/empty space.png')
+    screw = loadImage('Images/Basement/screw.png')
+
 }
 
 let Current_Screen = main_menu; 
@@ -73,8 +82,10 @@ function setup()
 {
     createCanvas( 800, 600 );
 
-    X = width/2
-    Y = height/2
+    Y = height/2;
+    s_y = 121;
+    s_yl = 121;
+    s_yr = 121;
 
 
     //room1 button
@@ -94,6 +105,13 @@ function setup()
     investigate_screen = new button_screen(99, 271, room2_ele_not_working, 16, 'Floor screen', '▶Investigate the Floor screen', 'black', width/2, height, 800, 200)
     back_to_room2_button = new button_screen(99, 315, room2_middle, 25, 'Back', '▶Go back to the room.', 'black', width/2, height, 800, 200)
     back_to_the_ele = new button_screen(717.5, 222, room2_elevator, 25, 'Back', '▶Go back to the elevator.', 'black', width/2, height, 800, 200)
+    back_to_room_g = new button_screen(73, 259, room2_middle, 25, 'Back', '▶Go back to the room.', 'black', width/2, height, 800, 200)
+    open_the_g = new button_screen(73, 201, room2_open_g, 25, 'Open it', '▶Open the generator', 'black', width/2, height, 800, 200)
+    back_to_the_g = new button_screen(73, 259, room2_generator, 25, 'Back', '▶Go back to the generator.', 'black', width/2, height, 800, 200)
+    use_screwdriver = new button_screen(73, 308, room2_use_screwdriver, 17, 'screwdriver', '▶Open the generator with screwdriver', 'black', width/2, height, 800, 200)
+    open_the_g_finally = new button_screen(73, 201, room2_g_is_finally_open, 25, 'Open it', '▶Open the generator', 'black', width/2, height, 800, 200)
+
+
 }
 
 
@@ -213,8 +231,27 @@ function draw()
 
     generator_MouseIsOver = within_gx && within_gy
 
-    //image(generator, 668, 120, 130, 222)
+    //screw effect setting 1
+    const screw_1_left = 279;
+    const screw_1_right = 279 + 12;
+    const screw_1_top = 316;
+    const screw_1_bottom = 316 + 15;
 
+    const within_Sc1x = mouseX >= screw_1_left && mouseX < screw_1_right;
+    const within_Sc1y = mouseY >= screw_1_top && mouseY < screw_1_bottom;
+
+    screw_1_MouseIsOver = within_Sc1x && within_Sc1y
+
+    //screw effect setting 2
+    const screw_2_left = 776;
+    const screw_2_right = 776 + 12;
+    const screw_2_top = 316;
+    const screw_2_bottom = 316 + 15;
+
+    const within_Sc2x = mouseX >= screw_2_left && mouseX < screw_2_right;
+    const within_Sc2y = mouseY >= screw_2_top && mouseY < screw_2_bottom;
+
+    screw_2_MouseIsOver = within_Sc2x && within_Sc2y
     
     //screen change
 
@@ -738,7 +775,7 @@ function draw()
                         rect(width/2, height, 800, 200)
 
                         fill('white')
-                        text('▶You pick the driver.', 66, 560)
+                        text('▶You pick the screwdriver.', 66, 560)
                         
                         back_to_the_room1_button2.draw()
                         back_to_the_room1_button2.update()
@@ -857,14 +894,245 @@ function draw()
                         {
                             image(g_bg, 0, 0, 800, 600)
                             
-                            image(detail_generator, 133, 109, 560, 360)
+                            image(detail_generator, 148, 113, 520, 320)
+                            
+                            strokeWeight(0);
+                            fill('black');
+                            rect(width/2, height, 800, 200);
+                            
+                            back_to_room_g.draw();
+                            back_to_room_g.update();
+
+                            open_the_g.draw();
+                            open_the_g.update();
+
+                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                        }
+
+                    break;
+                    case room2_open_g :
+                        {
+                            image(g_bg, 0, 0, 800, 600)
+                            
+                            image(detail_generator, 148, 113, 520, 320)
+                            
+                            strokeWeight(0);
+                            fill('black');
+                            rect(width/2, height, 800, 200);
+                            
+                            fill('white')
+                            text('▶It is tightly closed with screws. I think I need a screwdriver.', 50, 560);    
+
+                            back_to_the_g.draw();
+                            back_to_room_g.update();
+
+                            use_screwdriver.draw();
+                            use_screwdriver.update();
+
+                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                        }
+
+                    break;
+                    case room2_use_screwdriver :
+                        {
+                            image(g_bg, 0, 0, 800, 600)
+                            
+                            image(detail_generator, 148, 113, 520, 320)
                             
                             strokeWeight(0);
                             fill('black');
                             rect(width/2, height, 800, 200);
 
-                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            fill('white')
+                            text('▶Loosen the screw with the screwdriver.', 50, 560); 
+                            
+                            if(screw_1_MouseIsOver)
+                            {
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Click to loosen it', 50, 560); 
+
+                                if(mouseIsPressed)
+                                {
+                                    Current_Screen = room2_right_one_is_loosen
+                                }
+                            }
+                            if(screw_2_MouseIsOver)
+                            {
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Click to loosen it', 50, 560); 
+
+                                if(mouseIsPressed)
+                                {
+                                    Current_Screen = room2_left_one_is_loosen
+                                }
+                            }
+
+                            
+                            back_to_room_g.draw();
+                            back_to_room_g.update();
+
+
+
+                            image(sd, mouseX - 130, mouseY - 205 , 148, 228)
                         }
+
+                        break;
+                        case room2_right_one_is_loosen :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(detail_generator, 148, 113, 520, 320)
+
+                                image(screw, 159.5, s_y, 50, 38)
+                                s_y += 20
+                            
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Loosen the screw with the screwdriver.', 50, 560); 
+                    
+                                image(empty, 150, 116, 20, 18)
+                            
+                                back_to_room_g.draw();
+                                back_to_room_g.update();
+
+                                if(screw_2_MouseIsOver)
+                                {
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Click to loosen it', 50, 560); 
+
+                                if(mouseIsPressed)
+                                {
+                                    Current_Screen = room2_g_is_really_open_l
+                                }
+                                }
+
+                                image(sd, mouseX - 130, mouseY - 205 , 148, 228)
+                            }
+
+                        break;
+                        case room2_left_one_is_loosen:
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(detail_generator, 148, 113, 520, 320)
+
+                                image(screw, 652.5, s_y, 50, 38)
+                                s_y += 20
+                            
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Loosen the screw with the screwdriver.', 50, 560); 
+            
+                                image(empty, 645, 116, 20, 18)
+
+                                if(screw_1_MouseIsOver)
+                            {
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('white')
+                                text('▶Click to loosen it', 50, 560); 
+
+                                if(mouseIsPressed)
+                                {
+                                    Current_Screen = room2_g_is_really_open_r
+                                }
+                            }
+                            
+                                back_to_room_g.draw();
+                                back_to_room_g.update();
+
+                                image(sd, mouseX - 130, mouseY - 205 , 148, 228)
+                            }
+
+                        break;
+                        case room2_g_is_really_open_r :
+                            {
+                            image(g_bg, 0, 0, 800, 600)
+                            
+                            image(detail_generator, 148, 113, 520, 320)
+
+                            image(screw, 159.5, s_yr, 50, 38)
+                            s_yr += 20
+                            
+                            strokeWeight(0);
+                            fill('black');
+                            rect(width/2, height, 800, 200);
+
+                            fill('white')
+                            text('▶All screws are loosen.', 50, 560);
+
+                            image(empty, 645, 116, 20, 18);
+                            image(empty, 150, 116, 20, 18);
+
+                            open_the_g_finally.draw();
+                            open_the_g_finally.update();
+                            
+                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                            break;
+                            case room2_g_is_really_open_l :
+                                {
+                                image(g_bg, 0, 0, 800, 600)
+                                
+                                image(detail_generator, 148, 113, 520, 320)
+    
+                                image(empty, 645, 116, 20, 18);
+                                image(empty, 150, 116, 20, 18);
+                                
+                                image(screw, 652.5, s_yl, 50, 38)
+                                s_yl += 20
+
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+    
+                                fill('white')
+                                text('▶All screws are loosen.', 50, 560);
+
+                                open_the_g_finally.draw();
+                                open_the_g_finally.update();
+                                
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                }
+
+                            break;
+                            case room2_g_is_finally_open :
+                                {
+                                    image(g_bg, 0, 0, 800, 600)
+                            
+                                    image(detail_generator, 148, 113, 520, 320)
+
+                                
+                            
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    textSize(18)
+                                    text('▶The generator is open. we have to fix it. That way, I think I can use the elevator.', 50, 560);
+                                }
 }
 
 }
