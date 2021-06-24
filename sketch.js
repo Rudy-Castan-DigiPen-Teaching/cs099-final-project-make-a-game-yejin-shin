@@ -41,8 +41,10 @@ var frame1_MouseIsOver = false
 var elevator_MouseIsOver = false
 var screw_1_MouseIsOver = false
 var screw_2_MouseIsOver = false
-
-var button_MouseWasPressed = false
+var p_MouseIsOver = false
+var g_o_MouseIsOver = false
+var g_x_MouseIsOver = false
+var g_t_MouseIsOver = false
 
 function preload()
 {
@@ -73,7 +75,11 @@ function preload()
     sd = loadImage('Images/Basement/screwdriver.png')
     empty = loadImage('Images/Basement/empty space.png')
     screw = loadImage('Images/Basement/screw.png')
-
+    paint = loadImage('Images/Basement/eye moving paint.jpg')
+    wire_p = loadImage('Images/Basement/wire puzzles.jpg')
+    p_bg = loadImage('Images/Basement/paint background.jpg')
+    generator_e = loadImage('Images/Basement/wire puzzles ERROR.jpg')
+    generator_r = loadImage('Images/Basement/wire puzzles RIGHT.jpg')
 }
 
 let Current_Screen = main_menu; 
@@ -110,7 +116,14 @@ function setup()
     back_to_the_g = new button_screen(73, 259, room2_generator, 25, 'Back', '▶Go back to the generator.', 'black', width/2, height, 800, 200)
     use_screwdriver = new button_screen(73, 308, room2_use_screwdriver, 17, 'screwdriver', '▶Open the generator with screwdriver', 'black', width/2, height, 800, 200)
     open_the_g_finally = new button_screen(73, 201, room2_g_is_finally_open, 25, 'Open it', '▶Open the generator', 'black', width/2, height, 800, 200)
-
+    back_to_the_room_p = new button_screen(121.5, 213.5, room2_middle, 25, 'Back', '▶Go back to the room.', 'black', width/2, height, 800, 200)
+    investigate_paint = new button_screen(121.5, 161, room2_investigate_p, 16, 'investigate', '▶Look into the picture.', 'black', width/2, height, 800, 200)
+    investigate_gw = new button_screen(73, 259, room2_gp_how2play, 16, 'investigate', '▶Investigate the wire.', 'black', width/2, height, 800, 200)
+    push_the_button_g = new button_screen(73, 308, room2_gp_button_press, 12, 'Push the button', '▶Fix the electricity by pushing The "o", "x" and triangle button', 'black', width/2, height, 800, 200)
+    try_again = new button_screen(73, 308, room2_gp_button_press, 17, 'Try again', '▶Go back to the press button section.', 'black', width/2, height, 800, 200);
+    find_clue = new button_screen(73, 259, room2_middle, 25, 'Back', '▶Go back to the room and find some clue', 'black', width/2, height, 800, 200)
+    
+    go_back = new button_screen(73, 259, room2_middle_ele_working, 25, 'Back', '▶Go back to the room and take a elevator', 'black', width/2, height, 800, 200)
 
 }
 
@@ -252,6 +265,50 @@ function draw()
     const within_Sc2y = mouseY >= screw_2_top && mouseY < screw_2_bottom;
 
     screw_2_MouseIsOver = within_Sc2x && within_Sc2y
+
+    //paint effect setting
+    const p_left = 150;
+    const p_right = 150 + 118;
+    const p_top = 185;
+    const p_bottom = 185 + 170;
+
+    const within_px = mouseX >= p_left && mouseX < p_right;
+    const within_py = mouseY >= p_top && mouseY < p_bottom;
+
+    p_MouseIsOver = within_px && within_py
+
+    //g_o button effect setting
+    const g_o_left = 374;
+    const g_o_right = 374 + 28;
+    const g_o_top = 291;
+    const g_o_bottom = 291 + 28;
+
+    const within_g_ox = mouseX >= g_o_left && mouseX < g_o_right;
+    const within_g_oy = mouseY >= g_o_top && mouseY < g_o_bottom;
+
+    g_o_MouseIsOver = within_g_ox && within_g_oy
+
+    //g_x button effect setting
+    const g_x_left = 408;
+    const g_x_right = 408 + 28;
+    const g_x_top = 291;
+    const g_x_bottom = 291 + 28;
+
+    const within_g_xx = mouseX >= g_x_left && mouseX < g_x_right;
+    const within_g_xy = mouseY >= g_x_top && mouseY < g_x_bottom;
+
+    g_x_MouseIsOver = within_g_xx && within_g_xy
+
+    //g_t button effect setting
+    const g_t_left = 444;
+    const g_t_right = 444 + 28;
+    const g_t_top = 291;
+    const g_t_bottom = 291 + 28;
+
+    const within_g_tx = mouseX >= g_t_left && mouseX < g_t_right;
+    const within_g_ty = mouseY >= g_t_top && mouseY < g_t_bottom;
+
+    g_t_MouseIsOver = within_g_tx && within_g_ty
     
     //screen change
 
@@ -804,14 +861,46 @@ function draw()
 
                     image(generator, 668, 120, 130, 222)
 
+                    image(paint, 150, 187.5, 120, 169)
                     
+                    fill('#69f5f7')
+                    let x1 = map(mouseX, 0, width, 188, 192);
+                    let x2 = map(mouseX, 0, width, 226, 230);
+                    circle(x1, 259, 12)
+                    circle(x2, 258.2, 12)
+                    
+                    fill('#62564a')
+                    let x3 = map(mouseX, 0, width, 187, 193)
+                    let x4 = map(mouseX, 0, width, 225, 231)
+                    
+                    circle(x3, 259, 9)
+                    circle(x4, 258.2, 9)
+
+                    textSize(80)
+                    fill('#76f300')
+                    text('O', 587.5 ,213.5)
 
                     strokeWeight(0)
                     fill('black')
                     rect(width/2, height, 800, 200)
 
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
-                    
+
+                    if(p_MouseIsOver)
+                    {
+                        fill('white')
+                        textSize(25)
+                        text('▶It is a frame with a picture of a woman.', 50, 560)
+
+                        image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                        
+                        if(mouseIsPressed)
+                        {
+                            Current_Screen = room2_p_detail;
+                        }
+                    }
+
+
                     if(elevator_MouseIsOver)
                     {
                         fill('white')
@@ -844,9 +933,50 @@ function draw()
                     
                     
                     }
+
+                
                     
                        
                 }
+
+                break;
+                case room2_p_detail :
+                    {
+                        image(p_bg, 0, 0, 800, 600)
+
+                        image(paint, 269, 72, 320, 420)
+
+                        fill('#69f5f7')
+                        let x1 = map(mouseX, 0, width, 372, 379);
+                        let x2 = map(mouseX, 0, width, 473, 480);
+                        circle(x1, 248, 30)
+                        circle(x2, 247, 30)
+                        
+                        fill('#62564a')
+                        let x3 = map(mouseX, 0, width, 372, 379)
+                        let x4 = map(mouseX, 0, width, 473, 480)
+                        
+                        circle(x3, 248, 18)
+                        circle(x4, 247, 18)
+
+                        strokeWeight(0);
+                        fill('black');
+                        rect(width/2, height, 800, 200);
+
+                        fill('white')
+                        text('▶I feel like a woman is just looking at me.', 50, 560);
+
+                        
+                        back_to_the_room_p.draw();
+                        back_to_the_room_p.update();
+
+                        investigate_paint.draw();
+                        investigate_paint.update();
+
+
+                        image(mouse_cursor, mouseX , mouseY , 50, 50)
+
+                    }
                 break;
                 case room2_elevator :
                     {
@@ -867,6 +997,11 @@ function draw()
 
                         investigate_screen.draw();
                         investigate_screen.update();
+
+
+                        fill('#fc9090')
+                        textSize(15)
+                        text('X', 647 ,400)
 
                         image(mouse_cursor, mouseX , mouseY , 50, 50)
                     }
@@ -1121,9 +1256,7 @@ function draw()
                                 {
                                     image(g_bg, 0, 0, 800, 600)
                             
-                                    image(detail_generator, 148, 113, 520, 320)
-
-                                
+                                    image(wire_p, 148, 113, 520, 320)
                             
                                     strokeWeight(0);
                                     fill('black');
@@ -1131,9 +1264,779 @@ function draw()
 
                                     fill('white')
                                     textSize(18)
-                                    text('▶The generator is open. we have to fix it. That way, I think I can use the elevator.', 50, 560);
+                                    text('▶I think I need to fix the electricity by pressing the button to use the elevator.', 50, 560);
+
+                                    investigate_gw.draw();
+                                    investigate_gw.update();
+                                
+                                    image(mouse_cursor, mouseX , mouseY , 50, 50)
                                 }
-}
+
+                            break;
+                            case room2_gp_how2play :
+                                {
+                                    image(g_bg, 0, 0, 800, 600)
+                            
+                                    image(wire_p, 148, 113, 520, 320)
+                            
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('#62a6ff')
+                                    textSize(15);
+                                    text('1', 557.5 ,274)
+
+                                    fill('#81ff91')
+                                    textSize(15);
+                                    text('2', 565.5, 293)
+
+                                    fill('#fc9090')
+                                    textSize(15);
+                                    text('3', 312.5, 337)
+                                    
+                                    fill('white')
+                                    textSize(18)
+                                    text('▶I dusted off the wire, and the numbers came out.', 50, 560);
+                                    text('There are 1 on the blue wire, 2 on the green wire, and 3 on the red wire.', 50, 590);
+                                    
+                                    push_the_button_g.draw();
+                                    push_the_button_g.update();
+
+                                   image(mouse_cursor, mouseX , mouseY , 50, 50) 
+                                }
+
+                        break;
+                        case room2_gp_button_press :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(wire_p, 148, 113, 520, 320)
+                        
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('#62a6ff')
+                                textSize(15);
+                                text('1', 557.5 ,274)
+
+                                fill('#81ff91')
+                                textSize(15);
+                                text('2', 565.5, 293)
+
+                                fill('#fc9090')
+                                textSize(15);
+                                text('3', 312.5, 337)
+                                
+                                fill('white')
+                                textSize(18)
+                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+
+                                if(g_o_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶button "o"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_o_first
+                                    }
+
+                                }
+
+                                if(g_x_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button "X"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_x_first
+                                    }
+                                }
+
+                                if(g_t_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button triangle', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_t_first
+                                    }
+                                }
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                        break;
+                        case room2_button_o_first :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(wire_p, 148, 113, 520, 320)
+                        
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('#62a6ff')
+                                textSize(15);
+                                text('1', 557.5 ,274)
+
+                                fill('#81ff91')
+                                textSize(15);
+                                text('2', 565.5, 293)
+
+                                fill('#fc9090')
+                                textSize(15);
+                                text('3', 312.5, 337)
+                                
+                                fill('white')
+                                textSize(18)
+                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+
+                                if(g_x_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button "X"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_of_xs
+                                    }
+                                }
+
+                                if(g_t_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button triangle', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_of_ts
+                                    }
+                                }
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                        break;
+                        case room2_button_x_first :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(wire_p, 148, 113, 520, 320)
+                        
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('#62a6ff')
+                                textSize(15);
+                                text('1', 557.5 ,274)
+
+                                fill('#81ff91')
+                                textSize(15);
+                                text('2', 565.5, 293)
+
+                                fill('#fc9090')
+                                textSize(15);
+                                text('3', 312.5, 337)
+                                
+                                fill('white')
+                                textSize(18)
+                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+
+                                if(g_o_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button "O"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_xf_os
+                                    }
+                                }
+
+                                if(g_t_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button triangle', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_xf_ts
+                                    }
+                                }
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                        break;
+                        case room2_button_t_first :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(wire_p, 148, 113, 520, 320)
+                        
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('#62a6ff')
+                                textSize(15);
+                                text('1', 557.5 ,274)
+
+                                fill('#81ff91')
+                                textSize(15);
+                                text('2', 565.5, 293)
+
+                                fill('#fc9090')
+                                textSize(15);
+                                text('3', 312.5, 337)
+                                
+                                fill('white')
+                                textSize(18)
+                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+
+                                if(g_o_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button "O"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_tf_os
+                                    }
+                                }
+
+                                if(g_x_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button "X"', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_tf_xs
+                                    }
+                                }
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                        break;
+                        case room2_button_of_xs :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                            
+                                image(wire_p, 148, 113, 520, 320)
+                        
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+
+                                fill('#62a6ff')
+                                textSize(15);
+                                text('1', 557.5 ,274)
+
+                                fill('#81ff91')
+                                textSize(15);
+                                text('2', 565.5, 293)
+
+                                fill('#fc9090')
+                                textSize(15);
+                                text('3', 312.5, 337)
+                                
+                                fill('white')
+                                textSize(18)
+                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+
+                                if(g_t_MouseIsOver)
+                                {
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+
+                                    fill('white')
+                                    text('▶Button triangle', 50, 560); 
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_button_Wrong
+                                    }
+                                }
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                            break;
+                            case room2_button_of_ts :
+                                {
+                                    image(g_bg, 0, 0, 800, 600)
+                                
+                                    image(wire_p, 148, 113, 520, 320)
+                            
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+    
+                                    fill('#62a6ff')
+                                    textSize(15);
+                                    text('1', 557.5 ,274)
+    
+                                    fill('#81ff91')
+                                    textSize(15);
+                                    text('2', 565.5, 293)
+    
+                                    fill('#fc9090')
+                                    textSize(15);
+                                    text('3', 312.5, 337)
+                                    
+                                    fill('white')
+                                    textSize(18)
+                                    text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+    
+                                    if(g_x_MouseIsOver)
+                                    {
+                                        strokeWeight(0);
+                                        fill('black');
+                                        rect(width/2, height, 800, 200);
+    
+                                        fill('white')
+                                        text('▶Button "X"', 50, 560); 
+    
+                                        if(mouseIsPressed)
+                                        {
+                                            Current_Screen = room2_button_Wrong
+                                        }
+                                    }
+    
+                                    image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                }
+
+                                break;
+                                case room2_button_xf_os :
+                                    {
+                                        image(g_bg, 0, 0, 800, 600)
+                                    
+                                        image(wire_p, 148, 113, 520, 320)
+                                
+                                        strokeWeight(0);
+                                        fill('black');
+                                        rect(width/2, height, 800, 200);
+        
+                                        fill('#62a6ff')
+                                        textSize(15);
+                                        text('1', 557.5 ,274)
+        
+                                        fill('#81ff91')
+                                        textSize(15);
+                                        text('2', 565.5, 293)
+        
+                                        fill('#fc9090')
+                                        textSize(15);
+                                        text('3', 312.5, 337)
+                                        
+                                        fill('white')
+                                        textSize(18)
+                                        text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+        
+                                        if(g_t_MouseIsOver)
+                                        {
+                                            strokeWeight(0);
+                                            fill('black');
+                                            rect(width/2, height, 800, 200);
+        
+                                            fill('white')
+                                            text('▶Button triangle', 50, 560); 
+        
+                                            if(mouseIsPressed)
+                                            {
+                                                Current_Screen = room2_button_Wrong
+                                            }
+                                        }
+        
+                                        image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                    }
+
+                                    break;
+                                    case room2_button_xf_ts :
+                                        {
+                                            image(g_bg, 0, 0, 800, 600)
+                                        
+                                            image(wire_p, 148, 113, 520, 320)
+                                    
+                                            strokeWeight(0);
+                                            fill('black');
+                                            rect(width/2, height, 800, 200);
+            
+                                            fill('#62a6ff')
+                                            textSize(15);
+                                            text('1', 557.5 ,274)
+            
+                                            fill('#81ff91')
+                                            textSize(15);
+                                            text('2', 565.5, 293)
+            
+                                            fill('#fc9090')
+                                            textSize(15);
+                                            text('3', 312.5, 337)
+                                            
+                                            fill('white')
+                                            textSize(18)
+                                            text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+            
+                                            if(g_o_MouseIsOver)
+                                            {
+                                                strokeWeight(0);
+                                                fill('black');
+                                                rect(width/2, height, 800, 200);
+            
+                                                fill('white')
+                                                text('▶Button "o"', 50, 560); 
+            
+                                                if(mouseIsPressed)
+                                                {
+                                                    Current_Screen = room2_button_Wrong
+                                                }
+                                            }
+            
+                                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                        }
+
+                                        break;
+                                        case room2_button_tf_os :
+                                            {
+                                                image(g_bg, 0, 0, 800, 600)
+                                            
+                                                image(wire_p, 148, 113, 520, 320)
+                                        
+                                                strokeWeight(0);
+                                                fill('black');
+                                                rect(width/2, height, 800, 200);
+                
+                                                fill('#62a6ff')
+                                                textSize(15);
+                                                text('1', 557.5 ,274)
+                
+                                                fill('#81ff91')
+                                                textSize(15);
+                                                text('2', 565.5, 293)
+                
+                                                fill('#fc9090')
+                                                textSize(15);
+                                                text('3', 312.5, 337)
+                                                
+                                                fill('white')
+                                                textSize(18)
+                                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+                
+                                                if(g_x_MouseIsOver)
+                                                {
+                                                    strokeWeight(0);
+                                                    fill('black');
+                                                    rect(width/2, height, 800, 200);
+                
+                                                    fill('white')
+                                                    text('▶Button "X"', 50, 560); 
+                
+                                                    if(mouseIsPressed)
+                                                    {
+                                                        Current_Screen = room2_button_tf_os_xt_C
+                                                    }
+                                                }
+                
+                                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                            }
+
+                        break;
+                        case room2_button_tf_xs :
+                                            {
+                                                image(g_bg, 0, 0, 800, 600)
+                                            
+                                                image(wire_p, 148, 113, 520, 320)
+                                        
+                                                strokeWeight(0);
+                                                fill('black');
+                                                rect(width/2, height, 800, 200);
+                
+                                                fill('#62a6ff')
+                                                textSize(15);
+                                                text('1', 557.5 ,274)
+                
+                                                fill('#81ff91')
+                                                textSize(15);
+                                                text('2', 565.5, 293)
+                
+                                                fill('#fc9090')
+                                                textSize(15);
+                                                text('3', 312.5, 337)
+                                                
+                                                fill('white')
+                                                textSize(18)
+                                                text('▶Tip! You have to press the buttons in "specific" order to get electricity. ', 50, 560);
+                
+                                                if(g_o_MouseIsOver)
+                                                {
+                                                    strokeWeight(0);
+                                                    fill('black');
+                                                    rect(width/2, height, 800, 200);
+                
+                                                    fill('white')
+                                                    text('▶Button "O"', 50, 560); 
+                
+                                                    if(mouseIsPressed)
+                                                    {
+                                                        Current_Screen = room2_button_Wrong
+                                                    }
+                                                }
+                
+                                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                                            }
+                                                    break;
+                        case room2_button_Wrong :
+                            {
+                                    image(g_bg, 0, 0, 800, 600)
+                                
+                                    image(generator_e, 148, 113, 520, 320)
+                            
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+    
+                                    fill('#62a6ff')
+                                    textSize(15);
+                                    text('1', 557.5 ,274)
+    
+                                    fill('#81ff91')
+                                    textSize(15);
+                                    text('2', 565.5, 293)
+    
+                                    fill('#fc9090')
+                                    textSize(15);
+                                    text('3', 312.5, 337)
+                                    
+                                    fill('white')
+                                    textSize(18)
+                                    text('▶Wrong password. Try again. ', 50, 560);
+
+                                    try_again.draw();
+                                    try_again.update();
+
+                                    find_clue.draw();
+                                    find_clue.update();
+    
+                                    image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+
+                        break;
+                        case room2_button_tf_os_xt_C :
+                            {
+                                image(g_bg, 0, 0, 800, 600)
+                                
+                                    image(generator_r, 148, 113, 520, 320)
+                            
+                                    strokeWeight(0);
+                                    fill('black');
+                                    rect(width/2, height, 800, 200);
+    
+                                    fill('#62a6ff')
+                                    textSize(15);
+                                    text('1', 557.5 ,274)
+    
+                                    fill('#81ff91')
+                                    textSize(15);
+                                    text('2', 565.5, 293)
+    
+                                    fill('#fc9090')
+                                    textSize(15);
+                                    text('3', 312.5, 337)
+                                    
+                                    fill('white')
+                                    textSize(18)
+                                    text('▶Right password. You can take a elevator.', 50, 560);
+
+                                    go_back.draw();
+                                    go_back.update();
+    
+                                    image(mouse_cursor, mouseX , mouseY , 50, 50)
+                            }
+                        break;
+                        case room2_investigate_p :
+                            {
+                                image(p_bg, 0, 0, 800, 600)
+
+                                image(paint, 269, 72, 320, 420)
+        
+                                fill('#69f5f7')
+                                let x1 = map(mouseX, 0, width, 372, 379);
+                                let x2 = map(mouseX, 0, width, 473, 480);
+                                circle(x1, 248, 30)
+                                circle(x2, 247, 30)
+                                
+                                fill('#62564a')
+                                let x3 = map(mouseX, 0, width, 372, 379)
+                                let x4 = map(mouseX, 0, width, 473, 480)
+                                
+                                circle(x3, 248, 18)
+                                circle(x4, 247, 18)
+                                
+                                //fill('#2154ac')
+                                //textSize(35)
+                                //text('3', 486.5, 437.5)
+
+                                strokeWeight(8)
+                                stroke('#2154ac')
+                                noFill();
+                                triangle(470.5 ,423.5, 459.5 ,445.5, 485.5 ,445.5)
+
+                                strokeWeight(0);
+                                fill('black');
+                                rect(width/2, height, 800, 200);
+                                
+                                fill('white')
+                                textSize(25)
+                                text('▶"triangle" is written on her clothes.', 50, 560);
+
+
+                                back_to_the_room_p.draw();
+                                back_to_the_room_p.update();
+                                
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+                        }
+                        break;
+                        case room2_middle_ele_working :
+                            {
+                                image(basement_background,0, 0, 800, 600)
+
+                                strokeWeight(8)
+                                stroke('black')
+                                line(35, 39, 35, 502)
+                                line(92, 98, 92, 460)
+
+                                strokeWeight(0)
+                                fill('#c46d35')
+                                quad(39, 120, 88, 161, 88, 200, 39, 165)
+                                quad(39, 220, 88, 261, 88, 300, 39, 265)
+                                quad(39, 320, 88, 361, 88, 400, 39, 365)
+
+                                image(elevator, 280, 142, 250, 257)
+
+                                image(generator, 668, 120, 130, 222)
+
+                                image(paint, 150, 187.5, 120, 169)
+                    
+                                fill('#69f5f7')
+                                let x1 = map(mouseX, 0, width, 188, 192);
+                                let x2 = map(mouseX, 0, width, 226, 230);
+                                circle(x1, 259, 12)
+                                circle(x2, 258.2, 12)
+                    
+                                fill('#62564a')
+                                let x3 = map(mouseX, 0, width, 187, 193)
+                                let x4 = map(mouseX, 0, width, 225, 231)
+                    
+                                circle(x3, 259, 9)
+                                circle(x4, 258.2, 9)
+
+                                strokeWeight(0)
+                                fill('black')
+                                rect(width/2, height, 800, 200)
+
+                                image(mouse_cursor, mouseX , mouseY , 50, 50)
+
+                                if(p_MouseIsOver)
+                                {
+                                    fill('white')
+                                    textSize(25)
+                                    text('▶It is a frame with a picture of a woman.', 50, 560)
+
+                                    image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+                        
+                                }
+
+
+                                if(elevator_MouseIsOver)
+                                {   
+                                    fill('white')
+                                    textSize(25)
+                                    text('▶The elevator. The electricity is connect.', 50, 560)
+
+                                    image(Magnifying_Glass, mouseX , mouseY , 50, 50)
+
+                                    if(mouseIsPressed)
+                                    {
+                                        Current_Screen = room2_ele_is_working
+                                    }
+                        
+                    
+                                }       
+                                        }
+
+                    break;
+                    case room2_ele_is_working :
+                        {
+                            image(detail_elevator, 0, 0, 800, 600);
+
+                            strokeWeight(0);
+                            fill('black');
+                            rect(width/2, height, 800, 200);
+
+                            push_the_button.draw();
+                            push_the_button.update();
+
+                            investigate_door.draw();
+                            investigate_door.update();
+
+                            back_to_room2_button.draw();
+                            back_to_room2_button.update();
+
+                            investigate_screen.draw();
+                            investigate_screen.update();
+
+                            image(mouse_cursor, mouseX , mouseY , 50, 50)
+                        }
+                                    }
+
+                                    
 
 }
 

@@ -30,3 +30,28 @@ const room2_left_one_is_loosen =20;
 const room2_g_is_really_open_r = 21;
 const room2_g_is_really_open_l = 22;
 const room2_g_is_finally_open = 23;
+const room2_p_detail = 24;
+const room2_investigate_p = 25;
+const room2_gp_how2play = 26;
+const room2_gp_button_press = 27;
+
+const room2_button_o_first = 28;
+const room2_button_x_first = 29;
+const room2_button_t_first = 30;
+
+const room2_button_of_xs = 31;
+const room2_button_of_ts = 32;
+
+const room2_button_xf_os = 33;
+const room2_button_xf_ts = 34;
+
+const room2_button_tf_os = 35;
+const room2_button_tf_xs = 36;
+
+const room2_button_Wrong = 37;
+
+const room2_button_tf_os_xt_C = 41;
+
+const room2_middle_ele_working = 42;
+
+const room2_ele_is_working = 43;
