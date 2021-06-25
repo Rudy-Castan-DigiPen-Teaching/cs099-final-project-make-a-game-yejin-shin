@@ -55,3 +55,5 @@ const room2_button_tf_os_xt_C = 41;
 const room2_middle_ele_working = 42;
 
 const room2_ele_is_working = 43;
+
+const ENDING = 44;

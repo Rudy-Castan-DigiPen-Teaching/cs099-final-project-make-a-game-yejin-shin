@@ -7,6 +7,7 @@ let Y = 0;
 let s_y = 0;
 let s_yl = 0;
 let s_yr = 0;
+let credit_y = 0;
 
 //button class
 let room1_key_section_button
@@ -23,6 +24,9 @@ var start_left = 140
 var how2play_top = 400
 var how2play_left = 140
 
+var credit_top = 250
+var credit_left = 140
+
 var main_top = 511
 var main_left = 573
 
@@ -35,8 +39,12 @@ var how2play_height = 80
 var main_width = 165
 var main_height = 53
 
+var credit_width = 500
+var credit_height = 80
+
 var start_button_MouseIsOver = false
 var how2play_button_MouseIsOver = false
+var credit_button_MouseIsOver = false
 var frame1_MouseIsOver = false
 var elevator_MouseIsOver = false
 var screw_1_MouseIsOver = false
@@ -93,6 +101,8 @@ function setup()
     s_yl = 121;
     s_yr = 121;
 
+    credit_y = height;
+
 
     //room1 button
     room1_key_section_button = new button_screen(120, 120, room1_pick_the_key, 20,'The key', '▶Pick the key',  'black', width/2, height, 800, 200)
@@ -124,7 +134,7 @@ function setup()
     find_clue = new button_screen(73, 259, room2_middle, 25, 'Back', '▶Go back to the room and find some clue', 'black', width/2, height, 800, 200)
     
     go_back = new button_screen(73, 259, room2_middle_ele_working, 25, 'Back', '▶Go back to the room and take a elevator', 'black', width/2, height, 800, 200)
-
+    push_the_button_ending = new button_screen(99, 228, ENDING, 25, 'Button', '▶Escape this room', 'black', width/2, height, 800, 200)
 }
 
 
@@ -152,6 +162,11 @@ function draw()
     const m_top = main_top;
     const m_bottom = main_top + main_height;
 
+    const c_left = credit_left;
+    const c_right = credit_left + credit_width;
+    const c_top = credit_top;
+    const c_bottom = credit_top + credit_height;
+
     const within_hx = mouseX > h_left && mouseX < h_right;
     const within_hy = mouseY > h_top && mouseY < h_bottom;
 
@@ -161,10 +176,13 @@ function draw()
     const within_mx = mouseX > m_left && mouseX < m_right;
     const within_my = mouseY > m_top && mouseY < m_bottom;
 
-
+    const within_cx = mouseX > c_left && mouseX < c_right;
+    const within_cy = mouseY > c_top && mouseY < c_bottom;
+    
     how2play_button_MouseIsOver = within_hx && within_hy
     start_button_MouseIsOver = within_sx && within_sy
     main_button_MouseIsOver = within_mx && within_my
+    credit_button_MouseIsOver = within_cx && within_cy
 
     //frame 1 effect setting
     const f1_left = 368;
@@ -653,31 +671,7 @@ function draw()
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
                     
                 }
-                break;
-                case credit :
-                    {
-                        background('#f3edd3')
-                        for (let x = 20; x <= width; x += 250)
-                        {
-                        
-                           noStroke();
-                           fill('#dc5c21')
-                           rect(x - 50, height/25, 200, 40)
-                           fill('#c25726')
-                           rect(x - 10, height/1.5, 200, 40)
-                           fill('#dc5c21')
-                           rect(x - 40, height/2, 200, 40)
-                           fill('#c25726')
-                           rect(x - 50, height/3, 200, 40)
-                           fill('#c25726')
-                           rect(x, height/5.5, 200, 40)
-                           fill('#dc5c21')
-                           rect(x, height/1.2, 200, 40)
-                           fill('#c25726')
-                           rect(x -50, height/1.04, 200, 40)
-                        
-                        } 
-                    }
+
 
     break;
     case room1_key :
@@ -1983,16 +1977,6 @@ function draw()
 
                                 image(mouse_cursor, mouseX , mouseY , 50, 50)
 
-                                if(p_MouseIsOver)
-                                {
-                                    fill('white')
-                                    textSize(25)
-                                    text('▶It is a frame with a picture of a woman.', 50, 560)
-
-                                    image(Magnifying_Glass, mouseX , mouseY , 50, 50)
-                        
-                                }
-
 
                                 if(elevator_MouseIsOver)
                                 {   
@@ -2020,23 +2004,125 @@ function draw()
                             fill('black');
                             rect(width/2, height, 800, 200);
 
-                            push_the_button.draw();
-                            push_the_button.update();
-
-                            investigate_door.draw();
-                            investigate_door.update();
-
-                            back_to_room2_button.draw();
-                            back_to_room2_button.update();
-
-                            investigate_screen.draw();
-                            investigate_screen.update();
+                            push_the_button_ending.draw();
+                            push_the_button_ending.update();
 
                             image(mouse_cursor, mouseX , mouseY , 50, 50)
                         }
+
+                    break;
+                    case ENDING :
+                        {
+                            let credit_offset = 0;
+
+                            background('#f3edd3')
+                            for (let x = 20; x <= width; x += 250)
+                            {
+                        
+                               noStroke();
+                               fill('#dc5c21')
+                               rect(x - 50, height/25, 200, 40)
+                               fill('#c25726')
+                               rect(x - 10, height/1.5, 200, 40)
+                               fill('#dc5c21')
+                               rect(x - 40, height/2, 200, 40)
+                               fill('#c25726')
+                               rect(x - 50, height/3, 200, 40)
+                               fill('#c25726')
+                               rect(x, height/5.5, 200, 40)
+                               fill('#dc5c21')
+                               rect(x, height/1.2, 200, 40)
+                               fill('#c25726')
+                               rect(x -50, height/1.04, 200, 40)
+                        
+                            } 
+
+                            fill(255, 255, 255, 95);
+                            rect(width/2, height/2, 800, 600);
+                        
+                            strokeWeight(5)
+                            stroke('black')
+                            fill('white')
+                            textSize(80)
+                            text('Congratulations!', width/2 - 300, height/2 - 150)
+
+                            if(credit_button_MouseIsOver)
+                            {
+                                credit_width = 510
+                                credit_height = 82
+
+                                credit_offset = 3
+                            }
+
+                                else{
+                                        credit_width = 500
+                                        credit_height = 80
                                     }
 
-                                    
+                                if(mouseIsPressed)
+        {
+            const mouse_cx = mouseX >= width/2 - 250 && mouseX < width/2 + 250
+            const mouse_cy = mouseY >= height/2 - 40 && mouseY < height/2 + 40
+
+            if(mouse_cx && mouse_cy)
+            {
+                Current_Screen = credit
+            }
+        }
+
+        strokeWeight(5)
+        stroke('black')
+        fill(255)
+        rectMode(CENTER)
+        rect(400, 300, credit_width , credit_height)
+        strokeWeight(2)
+        fill('black')
+        textSize(55)
+        text('Credit', width/2 - 50, height/2 + 15 + credit_offset)
+
+                            
+                        }
+
+                        break;
+                        case credit :
+                            {
+                                background('#f3edd3')
+                                for (let x = 20; x <= width; x += 250)
+                                {
+                                
+                                   noStroke();
+                                   fill('#dc5c21')
+                                   rect(x - 50, height/25, 200, 40)
+                                   fill('#c25726')
+                                   rect(x - 10, height/1.5, 200, 40)
+                                   fill('#dc5c21')
+                                   rect(x - 40, height/2, 200, 40)
+                                   fill('#c25726')
+                                   rect(x - 50, height/3, 200, 40)
+                                   fill('#c25726')
+                                   rect(x, height/5.5, 200, 40)
+                                   fill('#dc5c21')
+                                   rect(x, height/1.2, 200, 40)
+                                   fill('#c25726')
+                                   rect(x -50, height/1.04, 200, 40)
+                                
+                                } 
+
+                                fill(255, 255, 255, 95);
+                                rect(width/2, height/2, 800, 600);
+
+                                credit_y -= 4
+
+                                fill('black')
+                                text('Made by Yejin', 0, credit_y)
+                                text('designed by Yejin', 0, credit_y + 50)
+                                text('coding by Yejin', 0, credit_y + 100)
+
+
+                            }
+                                    }
+
+                                             
 
 }
 
@@ -2044,7 +2130,5 @@ function mousePressed()
 {
     console.log(mouseX, mouseY);
 }
-
-
 
 
