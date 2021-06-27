@@ -3,6 +3,8 @@
 // Course     : CS099
 // Spring 2021
 
+
+//moving effect setting
 let Y = 0;
 let s_y = 0;
 let s_yl = 0;
@@ -18,6 +20,7 @@ let back_to_the_room1_button2
 let back_to_the_room1_button3
 let open_the_b_door
 
+//button setting
 var start_top = 250
 var start_left = 140
 
@@ -54,6 +57,10 @@ var g_o_MouseIsOver = false
 var g_x_MouseIsOver = false
 var g_t_MouseIsOver = false
 
+//sound effect setting
+let bgs
+let pick_up
+
 function preload()
 {
     //cursor
@@ -88,6 +95,10 @@ function preload()
     p_bg = loadImage('Images/Basement/paint background.jpg')
     generator_e = loadImage('Images/Basement/wire puzzles ERROR.jpg')
     generator_r = loadImage('Images/Basement/wire puzzles RIGHT.jpg')
+
+    //background music
+    bgs = loadSound ('Effect/Background.mp3')
+    pick_up = loadSound('Effect/pick up sound.wav')
 }
 
 let Current_Screen = main_menu; 
@@ -95,6 +106,9 @@ let Current_Screen = main_menu;
 function setup()
 {
     createCanvas( 800, 600 );
+
+    //sound
+    bgs.loop();
 
     Y = height/2;
     s_y = 121;
@@ -764,6 +778,8 @@ function draw()
                     
                     back_to_the_room1_button.draw()
                     back_to_the_room1_button.update()
+
+                    pick_up.play();
                 
                     image(mouse_cursor, mouseX , mouseY , 50, 50)
                 }
@@ -783,6 +799,8 @@ function draw()
 
                 back_to_the_room1_button.draw()
                 back_to_the_room1_button.update()
+
+                pick_up.play();
 
                 image(mouse_cursor, mouseX , mouseY , 50, 50)
             }
@@ -820,6 +838,7 @@ function draw()
                     {
                         background('#8E7F7F') 
 
+                        pick_up.play();
                         image(detail_frame, 0, 50 , 800, 487)
 
                         fill('black')
