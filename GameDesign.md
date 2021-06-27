@@ -7,3 +7,6 @@ This escape game is designed to leave the room with only one piece of informatio
 - such as screwdriver in first room and open the generator in second room ect..
 
 ### Mock Ups
+![Mock_ups_1](MU/Mock_ups_1.jpg)
+![Mock_ups_2](MU/Mock_ups_2.jpg)
+![Mock_ups_3](MU/Mock_ups_3.jpg)
